@@ -2,10 +2,14 @@ function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
     Status =zeros(N,1);      % Vetor que indica que se esta infectado(1) ou nao (0)
     
     
-    tempoTotal = 0;    %Tempo total dos eventos
     
-    pi = zeros(N+1,1);
-    d_total = 0;
+    %pi = zeros(N+1,1);
+    
+    tempoTotal = 0;    %Tempo total dos eventos    
+    d_anterior = 0;
+    tempoAnterior = 0;
+    areaTotal = 0;
+    
     
     for k=1:Iter    
         d = sum(Status);          % Usando o fato de que o grafo é completo a priori        
@@ -30,10 +34,24 @@ function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
             Status(indexmenorTempo) = 1;
         end
         
-        pi(d+1) = pi(d+1) + tempoEventos(indexmenorTempo);
         tempoTotal = tempoTotal + tempoEventos(indexmenorTempo);
-        d_total = d_total + d;
+        
+        if(d~=d_anterior)
+            areaTotal = areaTotal + d_anterior*(tempoTotal-tempoAnterior);
+            tempoAnterior = tempoTotal;
+            d_anterior = d;
+        end
+        
+        %pi(d+1) = pi(d+1) + tempoEventos(indexmenorTempo);
+        %tempoTotal = tempoTotal + tempoEventos(indexmenorTempo);
+        %d_total = d_total + d;
+        
+        
+    
     end
+    
+    p_d = areaTotal/(N*tempoTotal);
+    margemerr = p_d;
     
     %disp('probabilidade do escolhido estar infectado = ');
     %disp(d/N);
@@ -45,7 +63,7 @@ function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
     %p_d = media_p_d;
     %margemerr = 1.96*desviopadrao_p_d/sqrt(Iter);
     
-    pi = pi/tempoTotal;
+    %pi = pi/tempoTotal;
     
     %for k=0:N
     %    if (k>0)
@@ -59,8 +77,5 @@ function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
     
     
     % p_d = ;
-    p_d = d_total/(N*Iter);
-    
-    
-    margemerr = p_d;
+
 end

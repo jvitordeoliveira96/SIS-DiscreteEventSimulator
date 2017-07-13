@@ -1,17 +1,11 @@
-%  N - represents the total elements (individuals)
-N=10;
-
-
 C = 10;  % como se fosse o sup lambda lokao (codigo do pupilo)
 
-% Lambda - represents the exogenous infection rate
-lambda = C/N;
     
 % healing rate (desinfeccao)
 mu=1;
 
 % Total de iteracoes
-Iter =  10^5;  % LEMBRAR DE USAR NUMERO MUITO ELEVADO NA HORA DE BOTAR NO RELATORIO
+Iter =  10^4;  % LEMBRAR DE USAR NUMERO MUITO ELEVADO NA HORA DE BOTAR NO RELATORIO
 
 % Gamma - represents the endogenous infection rate
 % \gamma to be tested:
@@ -23,7 +17,10 @@ for gamma = 0.1:0.5:2.6
     margenserr = zeros(6,1);        %Armazena as margens de erro associadas ao anterior
 
     N = 10;
+    
     for k=1:10
+        % Lambda - represents the exogenous infection rate
+        lambda = C/N;
         [p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu);
         p_ds(k) = p_d;
         margenserr(k) = margemerr;
