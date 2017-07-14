@@ -1,4 +1,4 @@
-function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
+function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu , arg)
     Status =zeros(N,1);      % Vetor que indica que se esta infectado(1) ou nao (0)
     
     
@@ -14,7 +14,11 @@ function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
     
     for k=1:Iter    
         d = sum(Status);          % Usando o fato de que o grafo é completo a priori        
-        taxaInfeccao = lambda*(gamma^d);
+        if(strcmp(arg,'m'))
+            taxaInfeccao = lambda*(gamma^d);
+        else
+            taxaInfeccao = lambda + (gamma*d);
+        end
         tempoEventos = zeros(N,1); % tempo de cada evento
         % gerar d numeros com taxa de desinfeccao
         % gerar n-d numeros com taxa de infeccao
