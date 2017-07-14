@@ -20,7 +20,7 @@ for gamma = 0.1:0.5:2.6
     for k=1:11
         % Lambda - represents the exogenous infection rate
         lambda = C/N;
-        [p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu,'a');
+        [p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu,'a');  % usar 'a' para aditivo, 'm' para multiplicativo
         p_ds(k) = p_d;
         margenserr(k) = margemerr;
         N = N + 5;
