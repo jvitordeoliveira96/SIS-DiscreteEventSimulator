@@ -12,9 +12,8 @@ Iter =  10^4;  % LEMBRAR DE USAR NUMERO MUITO ELEVADO NA HORA DE BOTAR NO RELATO
 dominio = [10:5:55];
 
 for gamma = 0.1:0.5:2.6
-%for gamma = 1.1:1.1
     p_ds = zeros(10,1);              %Armazena o numero de infectados estimado
-    margenserr = zeros(6,1);        %Armazena as margens de erro associadas ao anterior
+    margenserr = zeros(10,1);        %Armazena as margens de erro associadas ao anterior
 
     N = 10;
     
@@ -27,7 +26,7 @@ for gamma = 0.1:0.5:2.6
         N = N + 5;
     end
     
-    plot(dominio, p_ds);
+    errorbar(dominio, p_ds, margenserr);
     hold on;
 end
 legend('gamma = 0.1', 'gamma = 0.6', 'gamma = 1.1', 'gamma = 1.6', 'gamma = 2.1', 'gamma=2.6');

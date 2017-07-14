@@ -9,6 +9,7 @@ function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
     d_anterior = 0;
     tempoAnterior = 0;
     areaTotal = 0;
+    d_samples = zeros(1,Iter);
     
     
     for k=1:Iter    
@@ -45,13 +46,14 @@ function[p_d, margemerr] = simularSI(N, Iter, lambda, gamma , mu)
         %pi(d+1) = pi(d+1) + tempoEventos(indexmenorTempo);
         %tempoTotal = tempoTotal + tempoEventos(indexmenorTempo);
         %d_total = d_total + d;
-        
+        d_samples(k) = d;
         
     
     end
     
-    p_d = areaTotal/(N*tempoTotal);
-    margemerr = p_d;
+    p_d = areaTotal/((N-0.8)*tempoTotal);
+    variancia = sum((d_samples/N -p_d).^2)/(Iter-1);
+    margemerr = 1.96*sqrt(variancia)/sqrt(Iter);   %Intervalo de confianca
     
     %disp('probabilidade do escolhido estar infectado = ');
     %disp(d/N);
